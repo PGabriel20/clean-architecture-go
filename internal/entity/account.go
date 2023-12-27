@@ -1,21 +1,30 @@
 package entity
 
-import "errors"
+import (
+	"errors"
+
+	"github.com/google/uuid"
+)
 
 var (
-	ErrInvalidAccount = errors.New("an account needs to have an ID")
-	ErrInvalidAccountUser = errors.New("an account needs to have a user")
+	ErrInvalidAccount      = errors.New("an account needs to have an ID")
+	ErrInvalidAccountUser  = errors.New("an account needs to have a user")
 )
 
 type Account struct {
-	ID string
-	UserID string
+	ID      uuid.UUID
+	UserID  uuid.UUID
 	Balance float64
 }
 
-func NewAccount(id string, userId string) (*Account, error) {
+type AccountRepository interface {
+	New(account Account) (Account, error)
+	GetAccount(id string) (Account, error)
+}
+
+func NewAccount(id uuid.UUID, userId uuid.UUID) (*Account, error) {
 	account := &Account{
-		ID: id,
+		ID:     id,
 		UserID: userId,
 	}
 
@@ -29,19 +38,18 @@ func NewAccount(id string, userId string) (*Account, error) {
 }
 
 func (account *Account) IsValid() error {
-	//account shoud be related to a user
-	if account.ID == "" {
+	if account.ID == uuid.Nil {
 		return ErrInvalidAccount
 	}
 
-	if account.UserID == "" {
+	if account.UserID == uuid.Nil {
 		return ErrInvalidAccountUser
 	}
 
 	return nil
 }
 
-//Domain-level business rules/concerns
+// Domain-level business rules/concerns
 func (account *Account) IncreaseBalance(amount float64) error {
 	account.Balance += amount
 	return nil

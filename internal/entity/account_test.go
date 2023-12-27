@@ -4,12 +4,13 @@ import (
 	"testing"
 
 	"github.com/PGabriel20/expenses-go/internal/entity"
+	"github.com/google/uuid"
 )
 
 type AccountTestCase struct {
 	Test string
-	ID string
-	UserID string
+	ID uuid.UUID
+	UserID uuid.UUID
 	Balance float64
 	ExpectedErr error
 }
@@ -19,14 +20,14 @@ func TestAccount_NewAccount(t *testing.T) {
 	testCases := []AccountTestCase{
 		{
 			Test: "Empty account ID",
-			ID: "",
-			UserID: "123",
+			ID: uuid.Nil,
+			UserID: uuid.MustParse("f47ac10b-58cc-0372-8567-0e02b2c3d479"),
 			ExpectedErr: entity.ErrInvalidAccount,
 		},
 		{
 			Test: "Empty user ID",
-			ID: "123",
-			UserID: "",
+			ID: uuid.MustParse("f47ac10b-58cc-0372-8567-0e02b2c3d479"),
+			UserID: uuid.Nil,
 			ExpectedErr: entity.ErrInvalidAccountUser,
 		},
 	}
@@ -44,7 +45,8 @@ func TestAccount_NewAccount(t *testing.T) {
 
 //Empty name should return ErrInvalidAccount
 func TestAccount_InitialBalance(t *testing.T) {
-	account, _ := entity.NewAccount("123", "1234")
+	uuid := uuid.MustParse("f47ac10b-58cc-0372-8567-0e02b2c3d479")
+	account, _ := entity.NewAccount(uuid, uuid)
 
 	if account.Balance != 0 {
 		t.Errorf("expected balance to be 0, but got: %v", account.Balance)

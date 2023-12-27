@@ -1,12 +1,21 @@
 package entity
 
-import "errors"
+import (
+	"errors"
+
+	"github.com/google/uuid"
+)
 
 type User struct {
-	ID string
+	ID uuid.UUID
 	Username string
 	Email string
 	Password string
+}
+
+type UserRepository interface {
+	Get(id User) (User, error)
+	Register(user User) (User, error)
 }
 
 var (
@@ -16,7 +25,7 @@ var (
 	ErrInvalidPassword = errors.New("a user must have a valid password")
 )
 
-func NewUser(id string, username string, email string, password string) (*User, error) {
+func NewUser(id uuid.UUID, username string, email string, password string) (*User, error) {
 	user := &User{
 		ID: id,
 		Username: username,
@@ -35,7 +44,7 @@ func NewUser(id string, username string, email string, password string) (*User, 
 
 //Email validation and password hashing are applications concerns, not domains
 func (u *User) isValid() error {
-		if u.ID == "" {
+		if u.ID == uuid.Nil {
 			return ErrInvalidID
 		}
  

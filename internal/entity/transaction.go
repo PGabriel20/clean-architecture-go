@@ -1,6 +1,10 @@
 package entity
 
-import "errors"
+import (
+	"errors"
+
+	"github.com/google/uuid"
+)
 
 var (
 	ErrInvalidTransaction         = errors.New("transaction must have an ID")
@@ -29,14 +33,23 @@ const (
 )
 
 type Transaction struct {
-	ID       string
-	AccountID string
+	ID       uuid.UUID
+	AccountID uuid.UUID
 	Amount   float64
 	Type     TransactionType
 	Category TransactionCategory
 }
 
-func NewTransaction(id string, accountID string, amount float64, transactionType TransactionType, category TransactionCategory) (*Transaction, error) {
+type TransactionRepository interface {
+	ListAll(accountId uuid.UUID) ([]Transaction, error)
+	New(transaction Transaction) (Transaction, error)
+	Update(transaction Transaction) (Transaction, error)
+	Remove(id uuid.UUID) error
+}
+
+func NewTransaction(id uuid.UUID, accountID uuid.UUID, amount float64, 
+	transactionType TransactionType, category TransactionCategory) (*Transaction, error) {
+
 	transaction := &Transaction{
 		ID:       id,
 		AccountID: accountID,
@@ -55,11 +68,11 @@ func NewTransaction(id string, accountID string, amount float64, transactionType
 }
 
 func (transaction *Transaction) isValid() error {
-	if transaction.ID == "" {
+	if transaction.ID == uuid.Nil {
 		return ErrInvalidTransaction
 	}
 
-	if transaction.AccountID == "" {
+	if transaction.AccountID == uuid.Nil {
 		return ErrInvalidTransactionAccount
 	}
 

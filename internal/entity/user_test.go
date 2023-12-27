@@ -4,23 +4,25 @@ import (
 	"testing"
 
 	"github.com/PGabriel20/expenses-go/internal/entity"
+	"github.com/google/uuid"
 )
 
 type UserTestCase struct {
 	Test string
-	ID string
+	ID uuid.UUID
 	Username string
 	Email string
 	Password string
 	ExpectedErr error
 }
 
+
 //User validation errors
 func TestUser_NewUser(t *testing.T) {
 	testCases := []UserTestCase{
 		{
 			Test: "Empty ID",
-			ID: "",
+			ID: uuid.Nil,
 			Username: "John doe",
 			Email: "john.doe@mail.com",
 			Password: "123",
@@ -28,7 +30,7 @@ func TestUser_NewUser(t *testing.T) {
 		},
 		{
 			Test: "Empty username",
-			ID: "123",
+			ID: uuid.MustParse("f47ac10b-58cc-0372-8567-0e02b2c3d479"),
 			Username: "",
 			Email: "john.doe@mail.com",
 			Password: "123",
@@ -36,7 +38,7 @@ func TestUser_NewUser(t *testing.T) {
 		},
 		{
 			Test: "Empty email",
-			ID: "123",
+			ID: uuid.MustParse("f47ac10b-58cc-0372-8567-0e02b2c3d479"),
 			Username: "John doe",
 			Email: "",
 			Password: "123",
@@ -44,7 +46,7 @@ func TestUser_NewUser(t *testing.T) {
 		},
 		{
 			Test: "Empty password",
-			ID: "123",
+			ID: uuid.MustParse("f47ac10b-58cc-0372-8567-0e02b2c3d479"),
 			Username: "John Doe",
 			Email: "john.doe@mail.com",
 			Password: "",

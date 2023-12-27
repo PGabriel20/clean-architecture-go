@@ -4,12 +4,13 @@ import (
 	"testing"
 
 	"github.com/PGabriel20/expenses-go/internal/entity"
+	"github.com/google/uuid"
 )
 
 type TransactionTestCase struct{
 	Test string
-	ID string
-	AccountID string
+	ID uuid.UUID
+	AccountID uuid.UUID
 	Amount   float64
 	Type     entity.TransactionType
 	Category entity.TransactionCategory
@@ -20,17 +21,17 @@ func TestTransaction_NewTransaction(t *testing.T) {
 	testCases := []TransactionTestCase{
 		{
 			Test: "Empty ID",
-			ID: "",
-			AccountID: "123",
+			ID: uuid.Nil,
+			AccountID: uuid.MustParse("f47ac10b-58cc-0372-8567-0e02b2c3d479"),
 			Amount: 100,
 			Type: entity.TransactionType(entity.Input),
 			Category: entity.TransactionCategory(entity.Groceries),
 			ExpectedErr: entity.ErrInvalidTransaction,
 		},
 		{
-			Test: "Empty user ID",
-			ID: "123",
-			AccountID: "",
+			Test: "Empty account ID",
+			ID: uuid.MustParse("f47ac10b-58cc-0372-8567-0e02b2c3d479"),
+			AccountID: uuid.Nil,
 			Amount: 100,
 			Type: entity.TransactionType(entity.Input),
 			Category: entity.TransactionCategory(entity.Groceries),
@@ -38,8 +39,8 @@ func TestTransaction_NewTransaction(t *testing.T) {
 		},
 		{
 			Test: "Zeroed ammount",
-			ID: "123",
-			AccountID: "12345",
+			ID: uuid.MustParse("f47ac10b-58cc-0372-8567-0e02b2c3d479"),
+			AccountID: uuid.MustParse("f47ac10b-58cc-0372-8567-0e02b2c3d479"),
 			Amount: 0,
 			Type: entity.TransactionType(entity.Input),
 			Category: entity.TransactionCategory(entity.Groceries),
@@ -47,8 +48,8 @@ func TestTransaction_NewTransaction(t *testing.T) {
 		},
 		{
 			Test: "Invalid transaction type",
-			ID: "123",
-			AccountID: "12345",
+			ID: uuid.MustParse("f47ac10b-58cc-0372-8567-0e02b2c3d479"),
+			AccountID: uuid.MustParse("f47ac10b-58cc-0372-8567-0e02b2c3d479"),
 			Amount: 100,
 			Type: "InvalidType",
 			Category: entity.TransactionCategory(entity.Groceries),
@@ -56,8 +57,8 @@ func TestTransaction_NewTransaction(t *testing.T) {
 		},
 		{
 			Test: "Invalid transaction category",
-			ID: "123",
-			AccountID: "12345",
+			ID: uuid.MustParse("f47ac10b-58cc-0372-8567-0e02b2c3d479"),
+			AccountID: uuid.MustParse("f47ac10b-58cc-0372-8567-0e02b2c3d479"),
 			Amount: 100,
 			Type: entity.TransactionType(entity.Input),
 			Category: "InvalidCategory",
