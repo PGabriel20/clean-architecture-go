@@ -3,19 +3,20 @@ package entity
 import "errors"
 
 var (
-	ErrInvalidAccount = errors.New("an account needs to have a name")
+	ErrInvalidAccount = errors.New("an account needs to have an ID")
+	ErrInvalidAccountUser = errors.New("an account needs to have a user")
 )
 
 type Account struct {
 	ID string
-	Name string
+	UserID string
 	Balance float64
 }
 
-func NewAccount(id string, name string) (*Account, error) {
+func NewAccount(id string, userId string) (*Account, error) {
 	account := &Account{
 		ID: id,
-		Name: name,
+		UserID: userId,
 	}
 
 	err := account.IsValid()
@@ -27,12 +28,26 @@ func NewAccount(id string, name string) (*Account, error) {
 	return account, nil
 }
 
-//Fine business rules
 func (account *Account) IsValid() error {
-	//account shoud have a name
-	if account.Name == "" {
+	//account shoud be related to a user
+	if account.ID == "" {
 		return ErrInvalidAccount
 	}
 
+	if account.UserID == "" {
+		return ErrInvalidAccountUser
+	}
+
+	return nil
+}
+
+//Domain-level business rules/concerns
+func (account *Account) IncreaseBalance(amount float64) error {
+	account.Balance += amount
+	return nil
+}
+
+func (account *Account) DecreaseBalance(amount float64) error {
+	account.Balance -= amount
 	return nil
 }
