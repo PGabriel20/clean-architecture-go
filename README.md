@@ -8,7 +8,7 @@ application code
 contains fine business rules
 
 /internal/usecase
-user actions and application business rules
+user actions and application-level business rules
 
 /internal/infra
 contains adapters to interact with usecases
