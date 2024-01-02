@@ -5,10 +5,10 @@ contains api endpoints
 application code
 
 /internal/entities
-app code, contains fine business rules
+contains fine business rules
 
 /internal/usecase
-user actions and business rules
+user actions and application business rules
 
 /internal/infra
 contains adapters to interact with usecases
