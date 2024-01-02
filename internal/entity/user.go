@@ -14,8 +14,8 @@ type User struct {
 }
 
 type UserRepository interface {
-	Get(id User) (User, error)
-	Register(user User) (User, error)
+	Get(id string) (*User, error)
+	Register(user User) error
 }
 
 var (
