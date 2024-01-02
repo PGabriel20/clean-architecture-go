@@ -1,0 +1,13 @@
+### Register User Request
+POST http://localhost:3000/v1/user/register
+Content-Type: application/json
+
+{
+  "Username": "john",
+  "Email": "john@example.com",
+  "Password": "password123"
+}
+
+### Get User Request
+GET http://localhost:3000/v1/user/3a718f0a-b896-4325-9a8c-940c453799af
+Content-Type: application/json
