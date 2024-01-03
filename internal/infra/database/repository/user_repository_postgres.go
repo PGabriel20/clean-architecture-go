@@ -7,15 +7,15 @@ import (
 	"github.com/PGabriel20/expenses-go/internal/entity"
 )
 
-type UserRepositoryPGSql struct {
+type UserRepositoryPostgres struct {
 	Db *sql.DB
 }
 
-func NewUserRepositoryPGSql(db *sql.DB) *UserRepositoryPGSql {
-	return &UserRepositoryPGSql{Db: db}
+func NewUserRepositoryPostgres(db *sql.DB) *UserRepositoryPostgres {
+	return &UserRepositoryPostgres{Db: db}
 }
 
-func(r *UserRepositoryPGSql) Get(id string) (*entity.User, error) {
+func(r *UserRepositoryPostgres) GetUser(id string) (*entity.User, error) {
 	query := "SELECT id, username, email FROM users WHERE id = $1"
 	row := r.Db.QueryRow(query, id)
 
@@ -29,7 +29,7 @@ func(r *UserRepositoryPGSql) Get(id string) (*entity.User, error) {
 	return &user, nil
 }
 
-func (r *UserRepositoryPGSql) Register(user entity.User) error {
+func (r *UserRepositoryPostgres) RegisterUser(user entity.User) error {
 	
 	//Running prepared statements, for concurrency
 	stmt, err := r.Db.Prepare("INSERT INTO users (id, username, email, password) VALUES ($1, $2, $3, $4)")

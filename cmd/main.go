@@ -28,7 +28,7 @@ func main() {
 	defer db.Close()
 
 	//Repositories
-	userRepo := repository.NewUserRepositoryPGSql(db)
+	userRepo := repository.NewUserRepositoryPostgres(db)
 
 	//CHI router instance
 	r := chi.NewRouter()
