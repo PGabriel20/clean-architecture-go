@@ -17,11 +17,6 @@ type Account struct {
 	Balance float64
 }
 
-type AccountRepository interface {
-	New(account Account) (Account, error)
-	GetAccount(id string) (Account, error)
-}
-
 func NewAccount(id uuid.UUID, userId uuid.UUID) (*Account, error) {
 	account := &Account{
 		ID:     id,

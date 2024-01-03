@@ -13,11 +13,6 @@ type User struct {
 	Password string
 }
 
-type UserRepository interface {
-	Get(id string) (*User, error)
-	Register(user User) error
-}
-
 var (
 	ErrInvalidID = errors.New("a user must have an ID")
 	ErrInvalidUsername = errors.New("a user must have a valid username")
