@@ -22,5 +22,4 @@ acts as controller, contains HTTP routes and methods that call usecases
 ## TODO
 
 - [ ] Better error handling
-- [ ] Better usecase naming
 - [ ] Logging
