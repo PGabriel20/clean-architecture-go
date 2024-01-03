@@ -1,21 +1,21 @@
 package usecase
 
 import (
-	"github.com/PGabriel20/expenses-go/internal/entity"
+	"github.com/PGabriel20/expenses-go/internal/adapter"
 )
 
 type GetUserUseCase struct {
-	UserRepository entity.UserRepository
+	UserRepository adapter.UserRepository
 }
 
-func NewGetUserUseCase(userRepository entity.UserRepository) *RegisterUserUseCase {
+func NewGetUserUseCase(userRepository adapter.UserRepository) *RegisterUserUseCase {
 	return &RegisterUserUseCase{
 		UserRepository: userRepository,
 	}
 }
 
-func (r *RegisterUserUseCase) ExecuteGet(id string) (UserOutputDto, error) {
-	user, err := r.UserRepository.Get(id)
+func (r *RegisterUserUseCase) GetUser(id string) (UserOutputDto, error) {
+	user, err := r.UserRepository.GetUser(id)
 
 	if err != nil {
 		return UserOutputDto{}, err

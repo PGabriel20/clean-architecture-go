@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"github.com/PGabriel20/expenses-go/internal/adapter"
 	"github.com/PGabriel20/expenses-go/internal/entity"
 	"github.com/PGabriel20/expenses-go/internal/pkg"
 	"github.com/google/uuid"
@@ -19,16 +20,16 @@ type UserOutputDto struct {
 }
 
 type RegisterUserUseCase struct {
-	UserRepository entity.UserRepository
+	UserRepository adapter.UserRepository
 }
 
-func NewRegisterUserUseCase(userRepository entity.UserRepository) *RegisterUserUseCase {
+func NewRegisterUserUseCase(userRepository adapter.UserRepository) *RegisterUserUseCase {
 	return &RegisterUserUseCase{
 		UserRepository: userRepository,
 	}
 }
 
-func (r *RegisterUserUseCase) ExecuteRegister(input UserInputDto) (UserOutputDto, error) {
+func (r *RegisterUserUseCase) RegisterUser(input UserInputDto) (UserOutputDto, error) {
 	hashedPassword, err := pkg.HashPassword(input.Password)
 
 	if err != nil {
@@ -41,7 +42,7 @@ func (r *RegisterUserUseCase) ExecuteRegister(input UserInputDto) (UserOutputDto
 		return UserOutputDto{}, err
 	}
 
-	if err := r.UserRepository.Register(*user); err != nil {
+	if err := r.UserRepository.RegisterUser(*user); err != nil {
 		return UserOutputDto{}, err
 	}
 
