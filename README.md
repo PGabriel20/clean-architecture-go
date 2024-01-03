@@ -14,7 +14,7 @@ contains interface contracts to interact with inner-most layers (repository -> u
 user actions and application-level business rules
 
 /internal/infra
-contains adapters to interact with usecases
+contains data layer and http handlers to interact with usecases
 
 /internal/handler
 acts as controller, contains HTTP routes and methods that call usecases
