@@ -6,6 +6,16 @@ import (
 	"github.com/google/uuid"
 )
 
+type UserRepository interface {
+	RegisterUser(user User) error
+	GetUser(id string) (*User, error)
+	//@TODO - implement
+	//AuthenticateUser
+	//UpdateUserDetails
+	//ChangePassword
+	//DeleteUserAccount
+}
+
 type User struct {
 	ID uuid.UUID
 	Username string

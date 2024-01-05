@@ -11,6 +11,16 @@ var (
 	ErrInvalidAccountUser  = errors.New("an account needs to have a user")
 )
 
+type AccountRepository interface {
+	CreateAccount(account Account) (Account, error)
+	GetAccount(id string) (Account, error)
+	//@TODO - implement
+	//CreateAccount
+	//CloseAccount
+	//GetAccountBalance
+}
+
+
 type Account struct {
 	ID      uuid.UUID
 	UserID  uuid.UUID

@@ -5,10 +5,7 @@ contains api endpoints
 application code
 
 /internal/entities
-contains fine business rules
-
-/internal/adapter
-contains interface contracts to interact with inner-most layers (repository -> usecase -> entity)
+contains fine business rules and repository interface contracts
 
 /internal/usecase
 user actions and application-level business rules
