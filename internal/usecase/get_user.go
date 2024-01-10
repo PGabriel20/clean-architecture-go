@@ -8,14 +8,14 @@ type GetUserUseCase struct {
 	UserRepository adapter.UserRepository
 }
 
-func NewGetUserUseCase(userRepository adapter.UserRepository) *RegisterUserUseCase {
-	return &RegisterUserUseCase{
+func NewGetUserUseCase(userRepository adapter.UserRepository) *GetUserUseCase {
+	return &GetUserUseCase{
 		UserRepository: userRepository,
 	}
 }
 
-func (r *RegisterUserUseCase) GetUser(id string) (UserOutputDto, error) {
-	user, err := r.UserRepository.GetUser(id)
+func (u *GetUserUseCase) GetUser(id string) (UserOutputDto, error) {
+	user, err := u.UserRepository.GetUser(id)
 
 	if err != nil {
 		return UserOutputDto{}, err

@@ -29,7 +29,7 @@ func NewRegisterUserUseCase(userRepository adapter.UserRepository) *RegisterUser
 	}
 }
 
-func (r *RegisterUserUseCase) RegisterUser(input UserInputDto) (UserOutputDto, error) {
+func (u *RegisterUserUseCase) RegisterUser(input UserInputDto) (UserOutputDto, error) {
 	hashedPassword, err := pkg.HashPassword(input.Password)
 
 	if err != nil {
@@ -42,7 +42,7 @@ func (r *RegisterUserUseCase) RegisterUser(input UserInputDto) (UserOutputDto, e
 		return UserOutputDto{}, err
 	}
 
-	if err := r.UserRepository.RegisterUser(*user); err != nil {
+	if err := u.UserRepository.RegisterUser(*user); err != nil {
 		return UserOutputDto{}, err
 	}
 
