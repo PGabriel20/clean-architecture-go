@@ -4,16 +4,16 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/PGabriel20/expenses-go/internal/adapter"
+	"github.com/PGabriel20/expenses-go/internal/entity"
 	"github.com/PGabriel20/expenses-go/internal/usecase"
 	"github.com/go-chi/chi/v5"
 )
 
 type UserHandler struct {
-	UserRepository adapter.UserRepository
+	UserRepository entity.UserRepository
 }
 
-func NewUserHandler(userRepository adapter.UserRepository, r *chi.Mux) {
+func NewUserHandler(userRepository entity.UserRepository, r *chi.Mux) {
 	handler := &UserHandler{
 		UserRepository: userRepository,
 	}
@@ -36,7 +36,7 @@ func (h *UserHandler) Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	registerUser := usecase.NewRegisterUserUseCase(h.UserRepository)
-	user, err := registerUser.RegisterUser(dto)
+	user, err := registerUser.Execute(dto)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -54,7 +54,7 @@ func (h *UserHandler) Get(w http.ResponseWriter, r *http.Request) {
 	uid := chi.URLParam(r, "id")
 
 	getUser := usecase.NewGetUserUseCase(h.UserRepository)
-	user, err := getUser.GetUser(uid)
+	user, err := getUser.Execute(uid)
 
 	if err != nil{
 		http.Error(w, err.Error(), http.StatusInternalServerError)
