@@ -22,7 +22,7 @@ func main() {
 	//Open DB connection
 	db, err := sql.Open(config.DBDriver, fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", config.DBHost, config.DBPort, config.DBUser, config.DBPassword, config.DBName))
 	if err != nil {
-		panic(fmt.Errorf("Failed to connect to database %v", err))
+		panic(fmt.Errorf("Failed to connect to database: %v", err))
 	}
 
 	defer db.Close()
@@ -36,6 +36,8 @@ func main() {
 	//HTTP handlers
 	handler.NewUserHandler(userRepo, r)
 	
+	fmt.Println("Server running on port 3000")
+
 	http.ListenAndServe(":3000", r)
 }
 
