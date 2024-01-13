@@ -24,8 +24,14 @@ func main() {
 	if err != nil {
 		panic(fmt.Errorf("Failed to connect to database: %v", err))
 	}
-
+	
 	defer db.Close()
+	
+	//Ping database
+	err = db.Ping()
+	if err != nil {
+		panic(fmt.Errorf("Failed to ping database: %v", err))
+	}
 
 	//Repositories
 	userRepo := repository.NewUserRepositoryPostgres(db)
