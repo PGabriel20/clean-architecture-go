@@ -12,16 +12,32 @@ services:
       - .env
     depends_on:
       - db
+
   db:
     image: postgres
     container_name: postgres
     restart: always
     env_file:
       - .env
+    environment:
+      - POSTGRES_PASSWORD=example
     ports:
       - '5432:5432'
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d
+    #DB needs to be running for migrations to execute
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
 
-volumes:
-  pgdata:
+  migrate:
+    image: migrate/migrate
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./internal/infra/database/migrations:/migrations
+    command:
+      [ "-path", "/migrations", "-database",  "postgres://postgres:example@db:5432/expenses?sslmode=disable", "up" ]
