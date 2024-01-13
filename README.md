@@ -26,7 +26,7 @@ This project follows the principles of Clean Architecture to structure a Go appl
 
 ### 1. Clone the Repository
 
-git clone \"https://github.com/your-username/clean-architecture-go.git\"
+git clone \"https://github.com/PGabriel20/clean-architecture-go.git\"
 
 ### 2. Navigate to the Project Directory
 
