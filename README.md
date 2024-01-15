@@ -11,7 +11,7 @@ This project follows the principles of Clean Architecture to structure a Go appl
   - Application code
 
 /internal/entities
-  - Contains fine business rules and repository interface contracts
+  - Contains core business rules and repository interface contracts
 
 /internal/usecase
   - User actions and application-level business rules
