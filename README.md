@@ -1,4 +1,4 @@
-"# Clean Architecture Go Project
+# Clean Architecture Go Project
 
 This project follows the principles of Clean Architecture to structure a Go application.
 
@@ -61,4 +61,4 @@ docker-compose down
 ## TODO
 
 - [ ] Better error handling
-- [ ] Logging"
+- [ ] Logging
